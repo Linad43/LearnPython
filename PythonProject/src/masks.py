@@ -1,3 +1,4 @@
+
 def get_list_card_numbers(input_number_card: str) -> list[str]:
     """получение листа номеров карточки по четыре"""
     list_card = input_number_card.split(" ")
