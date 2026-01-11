@@ -1,3 +1,5 @@
+from datetime import datetime
+
 
 def get_list_card_numbers(input_number_card: str) -> list[str]:
     """получение листа номеров карточки по четыре"""
@@ -25,3 +27,41 @@ def get_mask_account(input_number_card: str) -> str:
     if len(input_number_card) != 20:
         return "error input"
     return "**" + input_number_card[-4:]
+
+
+def mask_account_card(input_account_card: str) -> str:
+    """получение из полного наименования  счета или карточки,
+    только числа счета или карты
+    и передача данных далее get_mask_account или get_mask_card_number
+    соответственно"""
+    list_input_account_card = input_account_card.split(" ")
+    for name_card in list_input_account_card:
+        if name_card.isdigit():
+            if len(name_card) == 16:
+                return get_mask_card_number(name_card)
+            elif len(name_card) == 20:
+                return get_mask_account(name_card)
+            else:
+                return "error input"
+    return "error input"
+
+
+def get_date(input_date_str: str) -> str:
+    formats = [
+        "%Y-%m-%d",
+        "%B %d, %Y",
+        "%d %B %Y",
+        "%d %b %Y",
+        "%d %B %Y",
+        "%d/%m/%Y",
+        "%m/%d/%Y",
+    ]
+
+    for fmt in formats:
+        try:
+            dt = datetime.strptime(input_date_str.strip(), fmt)
+            return dt.strftime("%d.%m.%Y")
+        except ValueError:
+            pass
+
+    raise ValueError(f"Invalid date format: '{input_date_str}'")
