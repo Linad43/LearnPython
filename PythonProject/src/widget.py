@@ -1,4 +1,4 @@
-import masks
+import src.masks
 
 
 def mask_account_card(input_account_card: str) -> str:
@@ -13,9 +13,9 @@ def mask_account_card(input_account_card: str) -> str:
     for name_card in list_input_account_card:
         if name_card.isdigit():
             if len(name_card) == 16:
-                return text_card + masks.get_mask_card_number(name_card)
+                return text_card + src.masks.get_mask_card_number(name_card)
             elif len(name_card) == 20:
-                return text_card + masks.get_mask_account(name_card)
+                return text_card + src.masks.get_mask_account(name_card)
             else:
                 return "error input"
     return "error input"
