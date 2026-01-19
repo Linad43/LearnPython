@@ -15,3 +15,5 @@ list = [
 
 print(src.processing.filter_by_state(list))
 print(src.processing.filter_by_state(list, 'CANCELED'))
+print(src.processing.sort_by_date(list))
+print(src.processing.sort_by_date(list, False))
