@@ -1,4 +1,4 @@
-from PythonProject.src import masks
+from . import masks
 
 
 def mask_account_card(input_account_card: str) -> str:
