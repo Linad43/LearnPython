@@ -1,6 +1,6 @@
-from src.widget import get_date, mask_account_card
+from PythonProject.src import widget
 
-print(mask_account_card("Visa Platinum 7000792289606361"))
-print(mask_account_card("Maestro 7000792289606361"))
-print(mask_account_card("Счет 73654108430135874305"))
-print(get_date("2024-03-11T02:26:18.671407"))
+print(widget.mask_account_card("Visa Platinum 7000792289606361"))
+print(widget.mask_account_card("Maestro 7000792289606361"))
+print(widget.mask_account_card("Счет 73654108430135874305"))
+print(widget.get_date("2024-03-11T02:26:18.671407"))
