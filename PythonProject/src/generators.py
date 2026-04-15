@@ -2,30 +2,25 @@ from typing import Any, Generator
 
 
 def filter_by_currency(
-        transactions: list[dict[str, int | str | dict[str, str | dict[str, str]]]],
-        filter_currency_code: str
-) -> Generator[dict[str, int | str | dict[str, str | dict[str, str]]], Any, None]:
-    """
-    Функция должна возвращать итератор,
-    который поочередно выдает транзакции,
-    где валюта операции соответствует заданной
-    """
+    transactions: list[dict[str, Any]], filter_currency_code: str
+) -> Generator[dict[str, Any], Any, None]:
+    """Генератор транзакций с заданной валютой."""
     # result = filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions)
     for iter in filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions):
         yield iter
     return
 
 
-def transaction_descriptions(
-        transactions: list[dict[str, int | str | dict[str, str | dict[str, str]]]]
-) -> Generator[int | str | dict[str, str | dict[str, str]], None, None]:
+def transaction_descriptions(transactions: list[dict[str, Any]]) -> Generator[str, None, None]:
+    """Генератор описаний транзакций."""
     for iter in transactions:
         yield iter["description"]
     return
 
 
-def card_number_generator(num_begin, num_end) -> Generator[str, Any, None]:
-    for iter in range(num_begin, num_end+1):
+def card_number_generator(num_begin: int, num_end: int) -> Generator[str, Any, None]:
+    """Генератор номеров банковских карт."""
+    for iter in range(num_begin, num_end + 1):
         str_iter = str(iter)
         while len(str_iter) < 16:
             str_iter = f"0{str_iter}"
