@@ -1,12 +1,11 @@
-from typing import Any
-
 import pytest
 
 from src import generators
+from src.models import Transaction
 
 
 @pytest.fixture
-def transactions_test() -> list[dict[str, int | str | dict[str, str | dict[str, str]]]]:
+def transactions_test() -> list[Transaction]:
     """Лист для тестов generators"""
     return [
         {
@@ -57,41 +56,79 @@ def transactions_test() -> list[dict[str, int | str | dict[str, str | dict[str, 
     ]
 
 
-def test_usd_transactions(transactions_test: list[dict[str, Any]]) -> None:
+@pytest.mark.parametrize(
+    "expected",
+    [
+        [
+            {
+                "id": 939719570,
+                "state": "EXECUTED",
+                "date": "2018-06-30T02:08:58.425572",
+                "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+                "description": "Перевод организации",
+                "from": "Счет 75106830613657916952",
+                "to": "Счет 11776614605963066702",
+            },
+            {
+                "id": 142264268,
+                "state": "EXECUTED",
+                "date": "2019-04-04T23:20:05.206878",
+                "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
+                "description": "Перевод со счета на счет",
+                "from": "Счет 19708645243227258542",
+                "to": "Счет 75651667383060284188",
+            },
+            {
+                'id': 895315941,
+                'state': 'EXECUTED',
+                'date': '2018-08-19T04:27:37.904916',
+                'operationAmount': {'amount': '56883.54', 'currency': {'name': 'USD', 'code': 'USD'}},
+                'description': 'Перевод с карты на карту', 'from': 'Visa Classic 6831982476737658',
+                'to': 'Visa Platinum 8990922113665229'
+            }
+        ]
+    ],
+)
+def test_usd_transactions(transactions_test: list[Transaction], expected: list[Transaction]) -> None:
+    """Тест функции filter_by_currency"""
     generator = generators.filter_by_currency(transactions_test, "USD")
-    assert next(generator) == {
-        "id": 939719570,
-        "state": "EXECUTED",
-        "date": "2018-06-30T02:08:58.425572",
-        "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
-        "description": "Перевод организации",
-        "from": "Счет 75106830613657916952",
-        "to": "Счет 11776614605963066702",
-    }
-    assert next(generator) == {
-        "id": 142264268,
-        "state": "EXECUTED",
-        "date": "2019-04-04T23:20:05.206878",
-        "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
-        "description": "Перевод со счета на счет",
-        "from": "Счет 19708645243227258542",
-        "to": "Счет 75651667383060284188",
-    }
+    for index, _ in enumerate(expected):
+        assert next(generator) == expected[index]
 
 
-def test_transaction_descriptions(transactions_test: list[dict[str, Any]]) -> None:
+@pytest.mark.parametrize(
+    "expected",
+    [
+        [
+            "Перевод организации",
+            "Перевод со счета на счет",
+            "Перевод со счета на счет",
+            "Перевод с карты на карту",
+            "Перевод организации",
+        ]
+    ],
+)
+def test_transaction_descriptions(transactions_test: list[Transaction], expected: list[Transaction]) -> None:
+    """Тест функции transaction_descriptions"""
     descriptions = generators.transaction_descriptions(transactions_test)
-    assert next(descriptions) == "Перевод организации"
-    assert next(descriptions) == "Перевод со счета на счет"
-    assert next(descriptions) == "Перевод со счета на счет"
-    assert next(descriptions) == "Перевод с карты на карту"
-    assert next(descriptions) == "Перевод организации"
+    for index, _ in enumerate(expected):
+        assert next(descriptions) == expected[index]
 
 
-def test_card_number_generator() -> None:
+@pytest.mark.parametrize(
+    "expected",
+    [
+        [
+            "0000 0000 0000 0001",
+            "0000 0000 0000 0002",
+            "0000 0000 0000 0003",
+            "0000 0000 0000 0004",
+            "0000 0000 0000 0005",
+        ]
+    ],
+)
+def test_card_number_generator(expected: str) -> None:
+    """Тест функции card_number_generator"""
     card_number = generators.card_number_generator(1, 5)
-    assert next(card_number) == "0000 0000 0000 0001"
-    assert next(card_number) == "0000 0000 0000 0002"
-    assert next(card_number) == "0000 0000 0000 0003"
-    assert next(card_number) == "0000 0000 0000 0004"
-    assert next(card_number) == "0000 0000 0000 0005"
+    for index, _ in enumerate(expected):
+        assert next(card_number) == expected[index]
