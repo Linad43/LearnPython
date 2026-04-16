@@ -1,9 +1,11 @@
 from typing import Any, Generator
 
+from src.models import Transaction
+
 
 def filter_by_currency(
-    transactions: list[dict[str, Any]], filter_currency_code: str
-) -> Generator[dict[str, Any], Any, None]:
+    transactions: list[Transaction], filter_currency_code: str
+) -> Generator[Transaction, None, None]:
     """Генератор транзакций с заданной валютой."""
     # result = filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions)
     for iter in filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions):
@@ -11,7 +13,7 @@ def filter_by_currency(
     return
 
 
-def transaction_descriptions(transactions: list[dict[str, Any]]) -> Generator[str, None, None]:
+def transaction_descriptions(transactions: list[Transaction]) -> Generator[str, None, None]:
     """Генератор описаний транзакций."""
     for iter in transactions:
         yield iter["description"]
