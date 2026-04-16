@@ -8,8 +8,9 @@ def filter_by_currency(
 ) -> Generator[Transaction, None, None]:
     """Генератор транзакций с заданной валютой."""
     # result = filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions)
-    for iter in filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions):
-        yield iter
+    for transaction in transactions:
+        if transaction["operationAmount"]["currency"]["code"] == filter_currency_code:
+            yield transaction
     return
 
 

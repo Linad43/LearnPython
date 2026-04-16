@@ -78,10 +78,19 @@ def transactions_test() -> list[Transaction]:
                 "from": "Счет 19708645243227258542",
                 "to": "Счет 75651667383060284188",
             },
+            {
+                'id': 895315941,
+                'state': 'EXECUTED',
+                'date': '2018-08-19T04:27:37.904916',
+                'operationAmount': {'amount': '56883.54', 'currency': {'name': 'USD', 'code': 'USD'}},
+                'description': 'Перевод с карты на карту', 'from': 'Visa Classic 6831982476737658',
+                'to': 'Visa Platinum 8990922113665229'
+            }
         ]
     ],
 )
 def test_usd_transactions(transactions_test: list[Transaction], expected: list[Transaction]) -> None:
+    """Тест функции filter_by_currency"""
     generator = generators.filter_by_currency(transactions_test, "USD")
     for index, _ in enumerate(expected):
         assert next(generator) == expected[index]
@@ -100,6 +109,7 @@ def test_usd_transactions(transactions_test: list[Transaction], expected: list[T
     ],
 )
 def test_transaction_descriptions(transactions_test: list[Transaction], expected: list[Transaction]) -> None:
+    """Тест функции transaction_descriptions"""
     descriptions = generators.transaction_descriptions(transactions_test)
     for index, _ in enumerate(expected):
         assert next(descriptions) == expected[index]
@@ -117,7 +127,8 @@ def test_transaction_descriptions(transactions_test: list[Transaction], expected
         ]
     ],
 )
-def test_card_number_generator(expected) -> None:
+def test_card_number_generator(expected: str) -> None:
+    """Тест функции card_number_generator"""
     card_number = generators.card_number_generator(1, 5)
     for index, _ in enumerate(expected):
         assert next(card_number) == expected[index]

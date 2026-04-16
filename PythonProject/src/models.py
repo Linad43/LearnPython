@@ -1,12 +1,12 @@
 from typing import TypedDict
 
 
-class Currency:
+class Currency(TypedDict):
     name: str
     code: str
 
 
-class OperationAmount:
+class OperationAmount(TypedDict):
     amount: str
     currency: Currency
 
