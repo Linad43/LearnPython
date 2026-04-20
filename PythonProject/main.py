@@ -1,4 +1,5 @@
 from src import generators, processing, widget
+from src.decorators import log
 from src.models import Transaction
 
 print(widget.mask_account_card("Visa Platinum 7000792289606361"))
@@ -68,9 +69,15 @@ transactions: list[Transaction] = [
 
 gen = generators.filter_by_currency(transactions, "USD")
 print()
-print(next(gen))
-print(next(gen))
-print(next(gen))
-print(next(gen))
-print(next(gen))
-print(next(gen))
+for iter in gen:
+    print(iter)
+
+print()
+
+
+@log()
+def test_fun(x_in: int, y_in: int):
+    return x_in / y_in
+
+
+test_fun(1, 3)

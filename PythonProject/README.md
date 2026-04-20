@@ -73,7 +73,7 @@ transaction_descriptions(transactions)
 card_number_generator(1, 5)
 ```
 
-### processing.py
+## processing.py
 
 Функции обработки списка транзакций.
 
@@ -105,6 +105,19 @@ sort_by_date(transactions)
 
 По умолчанию сортировка идет от новых к старым.
 
+## decorators.py
+
+Файл функций декораторов
+
+### log
+
+Декоратор логирования
+
+```python
+@log(filename)
+```
+
+По умолчанию параметр `filename` отсутствует, и тогда логирование идет прямо в консоль. При вводе имени файла, логирование будет в файл.
 
 ## Установка
 
