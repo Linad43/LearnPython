@@ -3,13 +3,13 @@ import json
 from src.models import Transaction
 
 def read_json(path) -> list[Transaction]:
-    """Считывание .json файла с данными транзакций"""
+    """Считывание *.json файла с данными транзакций"""
     try:
         # Считываем данные если файл найден
         with open(path, "r", encoding="utf-8") as f:
             json_data = json.load(f)
 
-        # Проверяем является ли чситанные данные списком
+        # Проверяем является ли считанные данные списком
         #     если нет возвращаем пустой список
         if not isinstance(json_data, list):
             return []
@@ -25,7 +25,7 @@ def read_json(path) -> list[Transaction]:
                 result.append(Transaction.from_dict(item))
 
             # Если данные не корректны, возвращаем пустой список
-            except ValueError:
+            except Exception:
                 return []
         return result
 

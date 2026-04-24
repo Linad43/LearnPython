@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from PythonProject.src import utils
-from PythonProject.src.external_api import convert_to_rub
+from src import utils
+from src.external_api import convert_to_rub
 from src import generators, processing, widget
 from src.decorators import log
 from src.models import Transaction
