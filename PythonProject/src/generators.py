@@ -9,7 +9,7 @@ def filter_by_currency(
     """Генератор транзакций с заданной валютой."""
     # result = filter(lambda x: x["operationAmount"]["currency"]["code"] == filter_currency_code, transactions)
     for transaction in transactions:
-        if transaction["operationAmount"]["currency"]["code"] == filter_currency_code:
+        if transaction.operationAmount.currency.code == filter_currency_code:
             yield transaction
     return
 
@@ -17,7 +17,7 @@ def filter_by_currency(
 def transaction_descriptions(transactions: list[Transaction]) -> Generator[str, None, None]:
     """Генератор описаний транзакций."""
     for iter in transactions:
-        yield iter["description"]
+        yield iter.description
     return
 
 
