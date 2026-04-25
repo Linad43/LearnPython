@@ -13,6 +13,7 @@ api_key = os.getenv("API_KEY")
 
 
 def convert_to_rub(transaction: Transaction) -> float:
+    """Конвертация валют в рубли"""
     if transaction.operationAmount.currency.code != "RUB":
         amount = float(transaction.operationAmount.amount)
         url = "https://api.apilayer.com/exchangerates_data/latest"
