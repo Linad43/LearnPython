@@ -1,38 +1,18 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 import pytest
 
 from src import external_api
-from src.models import Transaction, OperationAmount, Currency
+from src.models import Currency, OperationAmount, Transaction
 
 
 @pytest.fixture
 def data_response():
-    return [{
-        "success": True,
-        "timestamp": 1777025236,
-        "base": "USD",
-        "date": "2026-04-24",
-        "rates": {
-            "RUB": 75
-        }
-    }, {
-        "success": True,
-        "timestamp": 1777025297,
-        "base": "EUR",
-        "date": "2026-04-24",
-        "rates": {
-            "RUB": 88
-        }
-    }, {
-        "success": True,
-        "timestamp": 1777025236,
-        "base": "USD",
-        "date": "2026-04-24",
-        "rates": {
-            "RUB": 75
-        }
-    }]
+    return [
+        {"success": True, "timestamp": 1777025236, "base": "USD", "date": "2026-04-24", "rates": {"RUB": 75}},
+        {"success": True, "timestamp": 1777025297, "base": "EUR", "date": "2026-04-24", "rates": {"RUB": 88}},
+        {"success": True, "timestamp": 1777025236, "base": "USD", "date": "2026-04-24", "rates": {"RUB": 75}},
+    ]
 
 
 @pytest.fixture
@@ -83,7 +63,7 @@ def transactions_test() -> list[Transaction]:
             description="Открытие вклада",
             from_="NONE",
             to="Счет 41421565395219882431",
-        )
+        ),
     ]
 
 

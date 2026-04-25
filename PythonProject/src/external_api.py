@@ -2,7 +2,8 @@ import os
 
 import requests
 from dotenv import load_dotenv
-from src.models import Transaction, OperationAmount, Currency
+
+from src.models import Transaction
 
 # Загрузка переменных из .env-файла
 load_dotenv()
@@ -15,14 +16,10 @@ def convert_to_rub(transaction: Transaction) -> float:
     if transaction.operationAmount.currency.code != "RUB":
         amount = float(transaction.operationAmount.amount)
         url = "https://api.apilayer.com/exchangerates_data/latest"
-        headers = {
-            "apikey": api_key
-        }
+        assert api_key is not None
+        headers = {"apikey": api_key}
 
-        params = {
-            "base": transaction.operationAmount.currency.code,
-            "symbols": "RUB"
-        }
+        params = {"base": transaction.operationAmount.currency.code, "symbols": "RUB"}
         try:
             response = requests.get(url, headers=headers, params=params, timeout=10)
             data = response.json()

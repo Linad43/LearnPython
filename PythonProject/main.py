@@ -1,9 +1,8 @@
 from pathlib import Path
 
-from src import utils
-from src.external_api import convert_to_rub
-from src import generators, processing, widget
+from src import generators, processing, utils, widget
 from src.decorators import log
+from src.external_api import convert_to_rub
 from src.models import Transaction
 
 print(widget.mask_account_card("Visa Platinum 7000792289606361"))

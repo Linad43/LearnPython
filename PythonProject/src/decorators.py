@@ -6,6 +6,7 @@ R = TypeVar("R")
 
 def log(filename: Optional[str] = None) -> Callable[[Callable[P, R | None]], Callable[P, R | None]]:
     """Логироваание работы функции и ее результат как в файл, так и в консоль."""
+
     def decorator(func: Callable[P, R]) -> Callable[P, R | None]:
         def write_log(message: str) -> None:
             if filename is None:

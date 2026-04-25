@@ -2,6 +2,7 @@ import json
 
 from src.models import Transaction
 
+
 def read_json(path) -> list[Transaction]:
     """Считывание *.json файла с данными транзакций"""
     try:
@@ -32,5 +33,3 @@ def read_json(path) -> list[Transaction]:
     # Если файл не найден, возвращаем пустой список
     except Exception:
         return []
-
-

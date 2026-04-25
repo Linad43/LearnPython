@@ -51,10 +51,10 @@ class Transaction:
 
         return Transaction(
             id=data["id"],
-            state = data["state"],
+            state=data["state"],
             date=data["date"],
             operationAmount=OperationAmount.from_dict(data.get("operationAmount", {})),
             description=data["description"],
-            from_ = data.get("from", "NONE"),
-            to = data.get("to", "NONE"),
+            from_=data.get("from", "NONE"),
+            to=data.get("to", "NONE"),
         )
