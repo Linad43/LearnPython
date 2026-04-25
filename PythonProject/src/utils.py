@@ -30,7 +30,7 @@ def read_json(path) -> list[Transaction]:
         return result
 
     # Если файл не найден, возвращаем пустой список
-    except FileNotFoundError:
+    except Exception:
         return []
 
 

@@ -79,7 +79,7 @@ print(processing.sort_by_date(list_test, False))
 #     },
 # ]
 
-path = Path(__file__).parent.absolute()
+path = Path(__file__).resolve().parent
 json_path = path / "data" / "operations.json"
 
 transactions: list[Transaction] = utils.read_json(json_path)

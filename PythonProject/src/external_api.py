@@ -2,7 +2,7 @@ import os
 
 import requests
 from dotenv import load_dotenv
-from src.models import Transaction
+from src.models import Transaction, OperationAmount, Currency
 
 # Загрузка переменных из .env-файла
 load_dotenv()
@@ -37,4 +37,4 @@ def convert_to_rub(transaction: Transaction) -> float:
         # data = response.json()
         # return amount * data["rates"]["RUB"]
     else:
-        return transaction.operationAmount.amount
+        return float(transaction.operationAmount.amount)

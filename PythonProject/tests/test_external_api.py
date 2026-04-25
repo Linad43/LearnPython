@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 import pytest
 
@@ -24,6 +24,14 @@ def data_response():
         "rates": {
             "RUB": 88
         }
+    }, {
+        "success": True,
+        "timestamp": 1777025236,
+        "base": "USD",
+        "date": "2026-04-24",
+        "rates": {
+            "RUB": 75
+        }
     }]
 
 
@@ -45,7 +53,8 @@ def transactions_test() -> list[Transaction]:
             description="Перевод организации",
             from_="Maestro 1596837868705199",
             to="Счет 64686473678894779589",
-        ), Transaction(
+        ),
+        Transaction(
             id=441945886,
             state="EXECUTED",
             date="2019-08-26T10:50:58.294041",
@@ -59,6 +68,21 @@ def transactions_test() -> list[Transaction]:
             description="Перевод организации",
             from_="MasterCard 7158300734726758",
             to="Счет 35383033474447895560",
+        ),
+        Transaction(
+            id=587085106,
+            state="EXECUTED",
+            date="2018-03-23T10:45:06.972075",
+            operationAmount=OperationAmount(
+                amount="48223",
+                currency=Currency(
+                    name="руб.",
+                    code="RUB",
+                ),
+            ),
+            description="Открытие вклада",
+            from_="NONE",
+            to="Счет 41421565395219882431",
         )
     ]
 
@@ -66,7 +90,13 @@ def transactions_test() -> list[Transaction]:
 @patch("requests.get")
 def test_convert_to_rub(mock_request, data_response, transactions_test) -> None:
     for index in range(len(data_response)):
-        mock_request.return_value = data_response[index]
-        result_fun = external_api.convert_to_rub(transactions_test)
-        check_result_fun = data_response[index]["rates"]["RUB"] * float(transactions_test[index]["operationAmount"]["amount"])
+        mock_response = Mock()
+        mock_response.json.return_value = data_response[index]
+        mock_request.return_value = mock_response
+        result_fun = external_api.convert_to_rub(transactions_test[index])
+        amount = float(transactions_test[index].operationAmount.amount)
+        if transactions_test[index].operationAmount.currency.code == "RUB":
+            check_result_fun = amount
+        else:
+            check_result_fun = data_response[index]["rates"]["RUB"] * amount
         assert result_fun == check_result_fun

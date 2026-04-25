@@ -17,7 +17,7 @@ def filter_by_currency(
 def transaction_descriptions(transactions: list[Transaction]) -> Generator[str, None, None]:
     """Генератор описаний транзакций."""
     for iter in transactions:
-        yield iter["description"]
+        yield iter.description
     return
 
 
