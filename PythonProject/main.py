@@ -1,9 +1,17 @@
+import logging
 from pathlib import Path
 
 from src import generators, processing, utils, widget
 from src.decorators import log
 from src.external_api import convert_to_rub
 from src.models import Transaction
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - '%(name)s' - %(levelname)s: %(message)s",
+    filemode="w",
+    filename="logs/logs.log",
+)
 
 print(widget.mask_account_card("Visa Platinum 7000792289606361"))
 print(widget.mask_account_card("Maestro 7000792289606361"))
