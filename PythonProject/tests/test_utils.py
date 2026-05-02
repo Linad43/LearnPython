@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from src import utils, fileops
+from src import utils
 from src.models import Currency, OperationAmount, Transaction
 
 
