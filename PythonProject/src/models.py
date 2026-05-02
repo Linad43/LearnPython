@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
+import pandas as pd
+
 
 @dataclass
 class Currency:
@@ -45,7 +47,7 @@ class Transaction:
     to: str
 
     @staticmethod
-    def from_dict(data: dict[str, Any]) -> "Transaction":
+    def from_json(data: dict[str, Any]) -> "Transaction":
         if not isinstance(data, dict):
             raise ValueError("Transaction must be dict")
 
@@ -57,4 +59,46 @@ class Transaction:
             description=data["description"],
             from_=data.get("from", "NONE"),
             to=data.get("to", "NONE"),
+        )
+
+    @staticmethod
+    def from_csv(data: dict[str, Any]) -> "Transaction":
+        if not isinstance(data, dict):
+            raise ValueError("Transaction must be dict")
+
+        return Transaction(
+            id=int(data["id"]),
+            state=data["state"],
+            date=data["date"],
+            operationAmount=OperationAmount(
+                amount=data["amount"],
+                currency=Currency(
+                    name=data["currency_name"],
+                    code=data["currency_code"],
+                ),
+            ),
+            description=data["description"],
+            from_=data.get("from") if data.get("from") != "" else "NONE",
+            to=data.get("to"),
+        )
+
+    @staticmethod
+    def from_excel(data: dict[str, Any]) -> "Transaction":
+        if not isinstance(data, dict):
+            raise ValueError("Transaction must be dict")
+
+        return Transaction(
+            id=int(data["id"]),
+            state=data["state"],
+            date=data["date"],
+            operationAmount=OperationAmount(
+                amount=str(round(data["amount"])),
+                currency=Currency(
+                    name=data["currency_name"],
+                    code=data["currency_code"],
+                ),
+            ),
+            description=data["description"],
+            from_=data.get("from") if pd.notna(data.get("from")) else "NONE",
+            to=data.get("to"),
         )
