@@ -33,7 +33,7 @@ def read_json(path) -> list[Transaction]:
                 continue
             # Если данные корректные, то они добавляются в возвращаемый список
             try:
-                result.append(Transaction.from_dict(item))
+                result.append(Transaction.from_json(item))
 
             # Если данные не корректны, возвращаем пустой список
             except Exception:
