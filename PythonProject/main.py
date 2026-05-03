@@ -3,7 +3,6 @@ from pathlib import Path
 
 from src import generators, processing, utils, widget
 from src.decorators import log
-from src.external_api import convert_to_rub
 from src.models import Transaction
 
 logging.basicConfig(
@@ -105,5 +104,3 @@ def test_fun(x_in: int, y_in: int):
 
 
 test_fun(1, 3)
-
-print(convert_to_rub(transactions[2]))
