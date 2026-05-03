@@ -78,8 +78,8 @@ class Transaction:
                 ),
             ),
             description=data["description"],
-            from_=data.get("from") if data.get("from") != "" else "NONE",
-            to=data.get("to"),
+            from_=data.get("from", "NONE") if data.get("from") != "" else "NONE",
+            to=data.get("to", "NONE"),
         )
 
     @staticmethod
@@ -99,6 +99,6 @@ class Transaction:
                 ),
             ),
             description=data["description"],
-            from_=data.get("from") if pd.notna(data.get("from")) else "NONE",
-            to=data.get("to"),
+            from_=data.get("from", "NONE") if pd.notna(data.get("from")) else "NONE",
+            to=data.get("to", "NONE"),
         )

@@ -1,9 +1,10 @@
 import csv
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
+
 from src.masks import logger
-from src.models import Transaction, OperationAmount, Currency
+from src.models import Transaction
 
 
 def read_csv(path: Path, delimiter: str = ",") -> list[Transaction]:
@@ -33,7 +34,7 @@ def read_exel(path: Path) -> list[Transaction]:
     logger.debug(f"Start read_exel({path})")
     try:
         data = pd.read_excel(path)
-        logger.debug(f"File opened successfully")
+        logger.debug("File opened successfully")
         result = []
         for index, row in data.iterrows():
             if row.isna().all():
