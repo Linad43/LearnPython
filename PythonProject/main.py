@@ -28,10 +28,10 @@ logging.basicConfig(
 # print(processing.sort_by_date(list_test))
 # print(processing.sort_by_date(list_test, False))
 #
-# path = Path(__file__).resolve().parent
-# json_path = path / "data" / "operations.json"
+path = Path(__file__).resolve().parent
+json_path = path / "data" / "operations.json"
 #
-# transactions: list[dict] = utils.read_json_dict(json_path)
+transactions: list[dict] = utils.read_json_dict(json_path)
 #
 # # gen = generators.filter_by_currency(transactions, "USD")
 # # print()
@@ -49,9 +49,8 @@ logging.basicConfig(
 # # test_fun(1, 3)
 #
 # processing.process_bank_search(transactions, "перевод организации")
-# categories = ["перевод организации", "открытие вклада"]
+# categories = ["Перевод организации", "Открытие вклада"]
 # processing.process_bank_operation(transactions, categories)
-#
 
 
 # Main menu
@@ -194,4 +193,4 @@ def main_menu():
             print(f"Сумма: {str(round(float(amount), 2))} {currency_name}\n")
 
 
-main_menu()
+# main_menu()

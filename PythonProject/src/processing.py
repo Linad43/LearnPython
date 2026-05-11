@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+from collections import Counter
 
 # from pandas.core.computation.common import result_type_many
 
@@ -35,20 +36,15 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
 
 def process_bank_operation(data: list[dict], categories: list[str]) -> dict:
     logger.debug(f"Start process_bank_operation(data, categories:'{categories}'")
-    result: dict = dict()
-    patterns = list()
-    for category in categories:
-        patterns.append(re.compile(pattern=category, flags=re.IGNORECASE))
-    for element in data:
-        for pattern in patterns:
-            if re.search(pattern, element["description"]):
-                logger.debug(f"Found category {element} in categories {categories}")
-                if result.get(element["description"]):
-                    result[element["description"]] += 1
-                else:
-                    result[element["description"]] = 1
-                break
+    descriptions = [t["description"] for t in data]
+    counter = Counter(descriptions)
+    result = {}
 
+    for category in categories:
+        result[category] = counter.get(category, 0)
+
+    print(json.dumps(descriptions, indent=4, ensure_ascii=False))
     print(json.dumps(result, indent=4, ensure_ascii=False))
+
     logger.debug(f"End process_bank_operation(data, categories:'{categories}'")
     return result
