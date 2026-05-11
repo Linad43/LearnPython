@@ -27,11 +27,11 @@ logging.basicConfig(
 # print(processing.filter_by_state(list_test, "CANCELED"))
 # print(processing.sort_by_date(list_test))
 # print(processing.sort_by_date(list_test, False))
-#
-path = Path(__file__).resolve().parent
-json_path = path / "data" / "operations.json"
-#
-transactions: list[dict] = utils.read_json_dict(json_path)
+# #
+# path = Path(__file__).resolve().parent
+# json_path = path / "data" / "operations.json"
+# #
+# transactions: list[dict] = utils.read_json_dict(json_path)
 #
 # # gen = generators.filter_by_currency(transactions, "USD")
 # # print()
@@ -193,4 +193,4 @@ def main_menu():
             print(f"Сумма: {str(round(float(amount), 2))} {currency_name}\n")
 
 
-# main_menu()
+main_menu()
