@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 def read_csv(path: Path, delimiter: str = ",") -> list[dict]:
+
     logger.debug(f"Start read_csv({path})")
     try:
         with open(path, "r", encoding="utf-8") as file:
