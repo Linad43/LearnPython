@@ -17,6 +17,23 @@ def filter_by_state(input_list: list[dict[str, int | str]], state: str = "EXECUT
     return result_list
 
 
+def filter_by_currency_code(input_list: list[dict], currency_code: str) -> list[dict]:
+    """Фильтр по валюте, и возврат нового листа"""
+    result_list = []
+    try:
+        if "operationAmount" in input_list[0]:
+            for element in input_list:
+                if element["operationAmount"]["currency"]["code"] == currency_code:
+                    result_list.append(element)
+        else:
+            for element in input_list:
+                if element["currency_code"] == currency_code:
+                    result_list.append(element)
+    except Exception as e:
+        print(e)
+    return result_list
+
+
 def sort_by_date(input_list: list[dict[str, int | str]], reverse: bool = True) -> list[dict[str, int | str]]:
     """Сортировка по дате, и возврат нового листа"""
     return sorted(input_list, key=lambda p: p["date"], reverse=reverse)

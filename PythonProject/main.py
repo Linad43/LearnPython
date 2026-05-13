@@ -141,20 +141,22 @@ def main_menu():
         answer = input("Пользователь: ")
         print()
         if answer.lower() in pattern_answer:
-            for index in range(len(filtered_transactions)):
-                if case == 1:
-                    filtered_transactions[index]["operationAmount"]["amount"] = str(
-                        external_api.convert_to_rub_dict(filtered_transactions[index])
-                    )
-                    filtered_transactions[index]["operationAmount"]["currency"]["code"] = "RUB"
-                    filtered_transactions[index]["operationAmount"]["currency"]["name"] = "руб."
-                else:
-                    filtered_transactions[index]["amount"] = str(
-                        external_api.convert_to_rub_dict(filtered_transactions[index])
-                    )
-                    filtered_transactions[index]["currency_code"] = "RUB"
-                    filtered_transactions[index]["currency_name"] = "руб."
+            filtered_transactions = processing.filter_by_currency_code(filtered_transactions, "RUB")
             break
+            # for index in range(len(filtered_transactions)):
+            #     if case == 1:
+            #         filtered_transactions[index]["operationAmount"]["amount"] = str(
+            #             external_api.convert_to_rub_dict(filtered_transactions[index])
+            #         )
+            #         filtered_transactions[index]["operationAmount"]["currency"]["code"] = "RUB"
+            #         filtered_transactions[index]["operationAmount"]["currency"]["name"] = "руб."
+            #     else:
+            #         filtered_transactions[index]["amount"] = str(
+            #             external_api.convert_to_rub_dict(filtered_transactions[index])
+            #         )
+            #         filtered_transactions[index]["currency_code"] = "RUB"
+            #         filtered_transactions[index]["currency_name"] = "руб."
+            # break
         else:
             print("Некорректное значение. Повторите ввод (Да/Нет).\n")
 
