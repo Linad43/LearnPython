@@ -1,8 +1,9 @@
+import datetime
 import logging
 import re
 from pathlib import Path
 
-from src import external_api, fileops, processing, utils, widget
+from src import fileops, processing, services, utils, views, widget
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -10,6 +11,8 @@ logging.basicConfig(
     filemode="w",
     filename="logs/logs.log",
 )
+
+
 #
 # print(widget.mask_account_card("Visa Platinum 7000792289606361"))
 # print(widget.mask_account_card("Maestro 7000792289606361"))
@@ -195,4 +198,39 @@ def main_menu():
             print(f"Сумма: {str(round(float(amount), 2))} {currency_name}\n")
 
 
-main_menu()
+# main_menu()
+#
+# path_home = Path(__file__).resolve().parent
+# path_excel = path_home / "data" / "operations.xlsx"
+# path_settings = path_home / "user_settings.json"
+# data = fileops.read_exel(path_excel)
+# # json_page = views.home_page(path_excel, path_settings, datetime.time())
+# # print(json_page)
+# # print(json.dumps(json_page, indent=4, sort_keys=True))
+#
+# # print(external_api.get_currency_rates(path_home / "user_settings.json"))
+#
+# # print(datetime.datetime.now())
+# # json_page = views.events_page(path_excel,path_settings, "31.12.2021")
+# # print(json.dumps(json_page, indent=4, sort_keys=True))
+# result = services.search_phone_numbers.__wrapped__(data)
+
+
+# print(json.dumps(result, indent=4, ensure_ascii=False))
+def main_coursework():
+    path_home = Path(__file__).resolve().parent
+    path_excel = path_home / "data" / "operations.xlsx"
+    path_settings = path_home / "user_settings.json"
+    data = fileops.read_exel(path_excel)
+    date = datetime.datetime(year=2021, month=3, day=20, hour=13, minute=39, second=43)
+
+    views.home_page(path_excel, path_settings, date)
+    views.events_page(path_excel, path_settings, date)
+
+    services.category_cashback(data, 2021, 3)
+    services.simple_search(data, "колхоз")
+    services.search_phone_numbers(data)
+    services.search_person_transfers(data)
+
+
+main_coursework()
